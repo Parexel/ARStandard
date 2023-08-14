@@ -4,14 +4,13 @@ function Layout(): JSX.Element {
   return (
     <div
       style={{
-        background: "#AACCFF",
+        background: "white",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center"
       }}
     >
-      Layout
       <Outlet />
     </div>
   );
