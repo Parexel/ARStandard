@@ -1,7 +1,4 @@
-import Button from "react-bootstrap/Button";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import HomeButton from "@renderer/components/HomeButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
 
@@ -29,28 +26,23 @@ function Home(): JSX.Element {
           alignItems: "center"
         }}
       >
-        <OverlayTrigger
-          placement="left"
-          delay={{ show: 250, hide: 400 }}
-          overlay={(props) => <Tooltip {...props}>Create new file</Tooltip>}
-        >
-          <Button
-            style={{ ...buttonStyle, marginRight: "1rem" }}
-            onClick={() => alert("Not implemented")}
-          >
-            <FontAwesomeIcon icon={faPlus} style={iconStyle} size="xl" />
-          </Button>
-        </OverlayTrigger>
+        <HomeButton
+          icon={faPlus}
+          iconSize="xl"
+          overlayText="Create new file"
+          overlayPlacement="left"
+          style={{ ...buttonStyle, marginRight: "1rem" }}
+          onClick={() => alert("Not implemented")}
+        />
 
-        <OverlayTrigger
-          placement="right"
-          delay={{ show: 250, hide: 400 }}
-          overlay={(props) => <Tooltip {...props}>Open existing file</Tooltip>}
-        >
-          <Button style={buttonStyle}>
-            <FontAwesomeIcon icon={faFolderOpen} style={iconStyle} size="xl" />
-          </Button>
-        </OverlayTrigger>
+        <HomeButton
+          icon={faFolderOpen}
+          iconSize="xl"
+          overlayText="Open existing file"
+          overlayPlacement="right"
+          style={buttonStyle}
+          onClick={() => alert("Opening file...")}
+        />
       </div>
     </div>
   );
