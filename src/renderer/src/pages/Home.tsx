@@ -1,11 +1,30 @@
 import HomeButton from "@renderer/components/HomeButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
+import { useRef, useState, useEffect, BaseSyntheticEvent } from "react";
+
 
 const buttonStyle = { height: 130, width: 130 };
-const iconStyle = { color: "white" };
 
 function Home(): JSX.Element {
+  const fileInputRef = useRef(null);
+  const [selectedFile, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (selectedFile != null) {
+      console.log(selectedFile.name);
+    }
+  }, [selectedFile]);
+
+
+  const handleFileChange = (event: BaseSyntheticEvent) => {
+    var newFile = null;
+    if (event.target.files.length > 0)
+      newFile = event.target.files[0];
+
+    setFile(newFile);
+  };
+
   return (
     <div
       style={{
@@ -41,8 +60,10 @@ function Home(): JSX.Element {
           overlayText="Open existing file"
           overlayPlacement="right"
           style={buttonStyle}
-          onClick={() => alert("Opening file...")}
+          onClick={() => fileInputRef.current?.click()}
         />
+
+        <input hidden ref={fileInputRef} type="file" accept=".yml, .yaml" onChange={handleFileChange} />
       </div>
     </div>
   );
