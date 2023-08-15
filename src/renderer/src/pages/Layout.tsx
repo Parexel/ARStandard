@@ -9,7 +9,7 @@ function Layout(): JSX.Element {
         background: "white",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center"
       }}
     >
