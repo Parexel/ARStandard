@@ -1,3 +1,5 @@
+import Navbar from "react-bootstrap/Navbar";
+import Container from "react-bootstrap/Container";
 import { Outlet } from "react-router-dom";
 
 function Layout(): JSX.Element {
@@ -11,6 +13,22 @@ function Layout(): JSX.Element {
         alignItems: "center"
       }}
     >
+      <Navbar style={{ width: "100%" }} bg="light" data-bs-theme="light">
+        <Container>
+          <Navbar.Brand href="/">
+            <img
+              alt=""
+              src="../../src/assets/icon.png"
+              width="40"
+              height="40"
+              className="d-inline-block align-top"
+            />{" "}
+            <Navbar.Text style={{ fontSize: 25, fontWeight: "bold" }}>
+              Home
+            </Navbar.Text>
+          </Navbar.Brand>
+        </Container>
+      </Navbar>
       <Outlet />
     </div>
   );

@@ -2,17 +2,20 @@ import HomeButton from "@renderer/components/HomeButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
 import { useRef, useState, useEffect, BaseSyntheticEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const buttonStyle = { height: 130, width: 130 };
 
 function Home(): JSX.Element {
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [selectedFile, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (selectedFile != null) {
       console.log(selectedFile.name);
+      navigate("/file", { state: { filePath: selectedFile.name }});
     }
   }, [selectedFile]);
 
