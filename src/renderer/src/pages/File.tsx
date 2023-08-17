@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MenuButton from "@renderer/components/MenuButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 
@@ -6,8 +6,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 const buttonStyle = { width: 130, height: 130 };
 
 function File(): JSX.Element {
+  const navigate = useNavigate();
   const location = useLocation();
   const { filePath } = location.state;
+
+  const goToOutputs = () => {
+    navigate("/outputs", { state: { filePath } });
+  };
 
   return (
     <div
@@ -39,7 +44,7 @@ function File(): JSX.Element {
           overlayText="Outputs"
           overlayPlacement="left"
           style={buttonStyle}
-          onClick={() => alert("Not implemented")}
+          onClick={goToOutputs}
         />
 
         <MenuButton
