@@ -23,9 +23,7 @@ function Layout(): JSX.Element {
               height="40"
               className="d-inline-block align-top"
             />{" "}
-            <Navbar.Text style={{ fontSize: 25, fontWeight: "bold" }}>
-              Home
-            </Navbar.Text>
+            <Navbar.Text style={{ fontSize: 25, fontWeight: "bold" }}>Home</Navbar.Text>
           </Navbar.Brand>
         </Container>
       </Navbar>

@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 
-function Outputs() {
+function Outputs(): JSX.Element {
   return (
     <Form
       style={{
@@ -25,9 +25,7 @@ function Outputs() {
         }}
       >
         <h2>Available Outputs</h2>
-        <Button>
-          Select All
-        </Button>
+        <Button>Select All</Button>
       </div>
 
       <Accordion
@@ -38,10 +36,8 @@ function Outputs() {
           overflowY: "auto"
         }}
       >
-        {[...Array(20).keys()].map(n => (
-          <Accordion.Item
-            eventKey={n.toString()}
-          >
+        {[...Array(20).keys()].map((n) => (
+          <Accordion.Item key={n} eventKey={n.toString()}>
             <Accordion.Header>Analysis Header #{n}</Accordion.Header>
             <Accordion.Body
               style={{
@@ -50,8 +46,9 @@ function Outputs() {
                 flexDirection: "column"
               }}
             >
-              {[...Array(20).keys()].map(n => (
+              {[...Array(20).keys()].map((n) => (
                 <div
+                  key={n}
                   style={{
                     width: "100%",
                     display: "flex",
@@ -60,10 +57,7 @@ function Outputs() {
                   }}
                 >
                   <Form.Label style={{ fontSize: 20 }}>Output {n}</Form.Label>
-                  <Form.Check
-                    defaultChecked={true}
-                    type="checkbox"
-                  />
+                  <Form.Check defaultChecked={true} type="checkbox" />
                 </div>
               ))}
             </Accordion.Body>
@@ -77,9 +71,7 @@ function Outputs() {
           justifyContent: "flex-end"
         }}
       >
-        <Button type="submit">
-          Generate
-        </Button>
+        <Button type="submit">Generate</Button>
       </div>
     </Form>
   );

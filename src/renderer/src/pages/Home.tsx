@@ -4,7 +4,6 @@ import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
 import { useRef, useState, useEffect, BaseSyntheticEvent, MutableRefObject } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const buttonStyle = { height: 130, width: 130 };
 
 function Home(): JSX.Element {
@@ -15,15 +14,13 @@ function Home(): JSX.Element {
   useEffect(() => {
     if (selectedFile != null) {
       console.log(selectedFile.name);
-      navigate("/file", { state: { filePath: selectedFile.name }});
+      navigate("/file", { state: { filePath: selectedFile.name } });
     }
   }, [selectedFile]);
 
-
-  const handleFileChange = (event: BaseSyntheticEvent) => {
-    var newFile = null;
-    if (event.target.files.length > 0)
-      newFile = event.target.files[0];
+  const handleFileChange = (event: BaseSyntheticEvent): void => {
+    let newFile = null;
+    if (event.target.files.length > 0) newFile = event.target.files[0];
 
     setFile(newFile);
   };
@@ -54,7 +51,7 @@ function Home(): JSX.Element {
           overlayText="Create new file"
           overlayPlacement="left"
           style={{ ...buttonStyle, marginRight: "1rem" }}
-          onClick={() => alert("Not implemented")}
+          onClick={(): void => alert("Not implemented")}
         />
 
         <HomeButton
@@ -63,10 +60,16 @@ function Home(): JSX.Element {
           overlayText="Open existing file"
           overlayPlacement="right"
           style={buttonStyle}
-          onClick={() => fileInputRef.current?.click()}
+          onClick={(): void => fileInputRef.current?.click()}
         />
 
-        <input hidden ref={fileInputRef} type="file" accept=".yml, .yaml" onChange={handleFileChange} />
+        <input
+          hidden
+          ref={fileInputRef}
+          type="file"
+          accept=".yml, .yaml"
+          onChange={handleFileChange}
+        />
       </div>
     </div>
   );
