@@ -4,7 +4,7 @@ import Accordion from "react-bootstrap/Accordion";
 
 function Outputs() {
   return (
-    <div
+    <Form
       style={{
         paddingLeft: "5%",
         paddingRight: "5%",
@@ -42,7 +42,7 @@ function Outputs() {
           <Accordion.Item
             eventKey={n.toString()}
           >
-            <Accordion.Header>Analysis #{n}</Accordion.Header>
+            <Accordion.Header>Analysis Header #{n}</Accordion.Header>
             <Accordion.Body
               style={{
                 width: "100%",
@@ -50,24 +50,22 @@ function Outputs() {
                 flexDirection: "column"
               }}
             >
-              <Form>
-                {[...Array(20).keys()].map(n => (
-                  <div
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}
-                  >
-                    <Form.Label style={{ fontSize: 20 }}>Output {n}</Form.Label>
-                    <Form.Check
-                      defaultChecked={true}
-                      type="checkbox"
-                    />
-                  </div>
-                ))}
-              </Form>
+              {[...Array(20).keys()].map(n => (
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <Form.Label style={{ fontSize: 20 }}>Output {n}</Form.Label>
+                  <Form.Check
+                    defaultChecked={true}
+                    type="checkbox"
+                  />
+                </div>
+              ))}
             </Accordion.Body>
           </Accordion.Item>
         ))}
@@ -79,11 +77,11 @@ function Outputs() {
           justifyContent: "flex-end"
         }}
       >
-        <Button>
+        <Button type="submit">
           Generate
         </Button>
       </div>
-    </div>
+    </Form>
   );
 }
 
