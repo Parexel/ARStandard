@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import MenuButton from "@renderer/components/MenuButton";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 
-
 const buttonStyle = { width: 130, height: 130 };
 
 function File(): JSX.Element {
@@ -67,7 +66,8 @@ function File(): JSX.Element {
           onClick={() => alert("Not implemented")}
         />
       </div>
-    </div>);
+    </div>
+  );
 }
 
 export default File;

@@ -1,4 +1,5 @@
 import HomeButton from "@renderer/components/HomeButton";
+import LoadingModal from "@renderer/components/LoadingModal";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
 import { useRef, useState, useEffect, BaseSyntheticEvent, MutableRefObject } from "react";
@@ -10,11 +11,15 @@ function Home(): JSX.Element {
   const navigate = useNavigate();
   const fileInputRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const [selectedFile, setFile] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (selectedFile != null) {
-      console.log(selectedFile.name);
-      navigate("/file", { state: { filePath: selectedFile.name } });
+      setLoading(true);
+      window.mainProcess.validateFile(selectedFile.name).then((isValid) => {
+        if (isValid) navigate("/file", { state: { filePath: selectedFile.name } });
+        setLoading(false);
+      });
     }
   }, [selectedFile]);
 
@@ -71,6 +76,7 @@ function Home(): JSX.Element {
           onChange={handleFileChange}
         />
       </div>
+      <LoadingModal description="Validating file..." show={loading} />
     </div>
   );
 }
