@@ -29,7 +29,7 @@ function File(): JSX.Element {
 
       <div
         style={{
-          marginTop: "30%",
+          marginTop: "20%",
           display: "flex",
           flexDirection: "row",
           alignItems: "center",

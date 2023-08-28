@@ -16,8 +16,8 @@ function Home(): JSX.Element {
   useEffect(() => {
     if (selectedFile != null) {
       setLoading(true);
-      window.mainProcess.validateFile(selectedFile.name).then((isValid) => {
-        if (isValid) navigate("/file", { state: { filePath: selectedFile.name } });
+      window.mainProcess.validateFile(selectedFile.path).then((isValid) => {
+        if (isValid) navigate("/file", { state: { filePath: selectedFile.path } });
         setLoading(false);
       });
     }
