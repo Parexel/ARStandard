@@ -3,19 +3,22 @@ import Button from "react-bootstrap/Button";
 import Tooltip from "react-bootstrap/Tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
-
-function MenuButton({icon, iconSize, text, overlayText, overlayPlacement, style, onClick}): JSX.Element {
+function MenuButton({
+  icon,
+  iconSize,
+  text,
+  overlayText,
+  overlayPlacement,
+  style,
+  onClick
+}): JSX.Element {
   return (
     <OverlayTrigger
       placement={overlayPlacement}
       delay={{ show: 250, hide: 400 }}
       overlay={(props) => <Tooltip {...props}>{overlayText}</Tooltip>}
     >
-      <Button
-        style={{ ...style}}
-        onClick={onClick}
-      >
+      <Button style={{ ...style }} onClick={onClick}>
         <div
           style={{
             display: "flex",
@@ -29,6 +32,5 @@ function MenuButton({icon, iconSize, text, overlayText, overlayPlacement, style,
     </OverlayTrigger>
   );
 }
-
 
 export default MenuButton;
