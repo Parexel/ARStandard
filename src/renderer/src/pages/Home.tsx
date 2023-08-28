@@ -1,5 +1,6 @@
 import HomeButton from "@renderer/components/HomeButton";
 import LoadingModal from "@renderer/components/LoadingModal";
+import ErrorModal from "@renderer/components/ErrorModal";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faFolderOpen } from "@fortawesome/free-regular-svg-icons";
 import { useRef, useState, useEffect, BaseSyntheticEvent, MutableRefObject } from "react";
@@ -12,13 +13,16 @@ function Home(): JSX.Element {
   const fileInputRef: MutableRefObject<HTMLInputElement | null> = useRef(null);
   const [selectedFile, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, displayError] = useState<string | null>(null);
 
   useEffect(() => {
     if (selectedFile != null) {
       setLoading(true);
       window.mainProcess.validateFile(selectedFile.path).then((isValid) => {
-        if (isValid) navigate("/file", { state: { filePath: selectedFile.path } });
         setLoading(false);
+
+        if (isValid) navigate("/file", { state: { filePath: selectedFile.path } });
+        else displayError(`The given file (${selectedFile.path}) is not of valid ARS format.`);
       });
     }
   }, [selectedFile]);
@@ -77,6 +81,12 @@ function Home(): JSX.Element {
         />
       </div>
       <LoadingModal description="Validating file..." show={loading} />
+      <ErrorModal
+        title="Validation Error"
+        message={error}
+        show={error != null}
+        handleClose={() => displayError(null)}
+      />
     </div>
   );
 }

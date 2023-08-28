@@ -10,7 +10,6 @@ export default (): void => {
   ipcMain.handle("validate-file", async (_, filePath) => {
     const fileContent = await fs.readFile(filePath);
     const analysisResults = yaml.parse(fileContent.toString());
-    console.log(analysisResults);
     return true;
   });
 };
