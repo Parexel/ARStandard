@@ -1,8 +1,24 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import LoadingModal from "@renderer/components/LoadingModal";
 
 function Outputs(): JSX.Element {
+  const location = useLocation();
+  const { filePath } = location.state;
+  const [analyses, setAnalyses] = useState<object[]>();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    window.mainProcess.getAnalyses(filePath).then((response) => {
+      setAnalyses(response);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <Form
       style={{
@@ -36,9 +52,9 @@ function Outputs(): JSX.Element {
           overflowY: "auto"
         }}
       >
-        {[...Array(20).keys()].map((n) => (
-          <Accordion.Item key={n} eventKey={n.toString()}>
-            <Accordion.Header>Analysis Header #{n}</Accordion.Header>
+        {analyses?.map((analysis, i) => (
+          <Accordion.Item key={i} eventKey={i.toString()}>
+            <Accordion.Header>{analysis.name}</Accordion.Header>
             <Accordion.Body
               style={{
                 width: "100%",
@@ -46,7 +62,7 @@ function Outputs(): JSX.Element {
                 flexDirection: "column"
               }}
             >
-              {[...Array(20).keys()].map((n) => (
+              {[...Array(20)].map((n) => (
                 <div
                   key={n}
                   style={{
@@ -73,6 +89,7 @@ function Outputs(): JSX.Element {
       >
         <Button type="submit">Generate</Button>
       </div>
+      <LoadingModal description="Loading file..." show={loading} />
     </Form>
   );
 }

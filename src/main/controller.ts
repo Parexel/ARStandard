@@ -1,6 +1,5 @@
 import { ipcMain } from "electron";
-import { promises as fs } from "fs";
-import yaml from "yaml";
+import { AnalysisResult, parseFile } from "./model/AnalysisResults";
 
 export default (): void => {
   ipcMain.on("health-check", () => {
@@ -8,8 +7,13 @@ export default (): void => {
   });
 
   ipcMain.handle("validate-file", async (_, filePath) => {
-    const fileContent = await fs.readFile(filePath);
-    const analysisResults = yaml.parse(fileContent.toString());
+    const analysisResults: AnalysisResult = await parseFile(filePath);
+    console.log(analysisResults);
     return true;
+  });
+
+  ipcMain.handle("get-analyses", async (_, filePath) => {
+    const analysisResults = await parseFile(filePath);
+    return analysisResults.analyses;
   });
 };
