@@ -85,7 +85,7 @@ function Home(): JSX.Element {
         title="Validation Error"
         message={error}
         show={error != null}
-        handleClose={() => displayError(null)}
+        handleClose={(): void => displayError(null)}
       />
     </div>
   );

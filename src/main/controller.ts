@@ -1,17 +1,21 @@
 import { ipcMain } from "electron";
-import { isRight } from "fp-ts/Either";
-import { AnalysisResult, parseFile } from "./model/AnalysisResults";
+import { AnalysisResults, parseFile, validateResults } from "./model/AnalysisResults";
 import { Analysis } from "./model/Analysis";
 
 export default (): void => {
   ipcMain.handle("validate-file", async (_, filePath): Promise<boolean> => {
-    const analysisResults = await parseFile(filePath);
-    const decoded = AnalysisResult.decode(analysisResults);
-    return isRight(decoded);
+    let analysisResults: AnalysisResults;
+    try {
+      analysisResults = await parseFile(filePath);
+    } catch (e) {
+      return false;
+    }
+
+    return validateResults(analysisResults);
   });
 
   ipcMain.handle("get-analyses", async (_, filePath): Promise<Analysis[]> => {
-    const analysisResults = await parseFile<AnalysisResult>(filePath);
+    const analysisResults = await parseFile(filePath);
     return analysisResults.analyses;
   });
 };
