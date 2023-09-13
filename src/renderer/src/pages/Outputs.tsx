@@ -1,23 +1,18 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
-import { useState, useEffect } from "react";
+import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import LoadingModal from "@renderer/components/LoadingModal";
 
 function Outputs(): JSX.Element {
   const location = useLocation();
   const { filePath } = location.state;
-  const [analyses, setAnalyses] = useState<object[]>();
-  const [loading, setLoading] = useState(false);
+  const { isLoading, isError, data, error } = useQuery("getAnalyses", async () =>
+    window.mainProcess.getAnalyses(filePath)
+  );
 
-  useEffect(() => {
-    setLoading(true);
-    window.mainProcess.getAnalyses(filePath).then((response) => {
-      setAnalyses(response);
-      setLoading(false);
-    });
-  }, []);
+  if (isError) return <span>{JSON.stringify(error)}</span>;
 
   return (
     <Form
@@ -52,7 +47,7 @@ function Outputs(): JSX.Element {
           overflowY: "auto"
         }}
       >
-        {analyses?.map((analysis, i) => (
+        {data?.map((analysis, i) => (
           <Accordion.Item key={i} eventKey={i.toString()}>
             <Accordion.Header>{analysis.name}</Accordion.Header>
             <Accordion.Body
@@ -89,7 +84,7 @@ function Outputs(): JSX.Element {
       >
         <Button type="submit">Generate</Button>
       </div>
-      <LoadingModal description="Loading file..." show={loading} />
+      <LoadingModal description="Loading file..." show={isLoading} />
     </Form>
   );
 }
